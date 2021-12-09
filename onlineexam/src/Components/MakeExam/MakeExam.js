@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { useHistory } from "react-router-dom";
 
 
 let crypto = require("crypto");
@@ -14,18 +15,24 @@ const MakeExam = () => {
 
     let date = new Date();
 
+    const history = useHistory();
+
 
     const handleSubmit = e => {
         e.preventDefault();
+
+        let exam_id = crypto.randomBytes(6).toString('hex');
 
         const data = {
             name: name.current.value,
             subject: subject.current.value,
             last_date: endDate.toLocaleDateString(),
-            exam_id: crypto.randomBytes(6).toString('hex'),
+            exam_id: exam_id,
         };
 
         console.log(data);
+
+        history.push(`/exam/${exam_id}`);
     }
     
     return (
