@@ -6,7 +6,6 @@ const Questions = ({props}) => {
 
     let vl = 1;
 
-    console.log(answer);
 
     return (
         <>
@@ -19,9 +18,10 @@ const Questions = ({props}) => {
                     {
                         options.map(option => {
                             return (
+                                
                                 answer == vl ? 
                                 <div class="p-2 w-full">
-                                    <div class="border-2 bg-gray-900 rounded flex p-4 h-full items-center">
+                                    <div class="border-2 border-gray-900 bg-gray-900 rounded flex p-4 h-full items-center">
                                         <span class="title-font font-medium text-gray-100">{vl++}. {option}</span>
                                     </div>
                                 </div> :

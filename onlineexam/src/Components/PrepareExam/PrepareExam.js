@@ -10,6 +10,8 @@ const PrepareExam = () => {
     const [questions, setQuestions] = useState([]);
     const {exam_id} = useParams();
 
+    let count = 1;
+
     let quesion = useRef('');
     let options1 = useRef('');
     let options2 = useRef('');
@@ -53,9 +55,9 @@ const PrepareExam = () => {
                 {
                     questions.map(ques => {
                         return(
-                            <>
+                            <>  
                                 {
-                                    <Questions key={ques.ques_id} props={ques} />
+                                    <Questions key={ques.ques_id} props={ques} count={count}/>
                                 }
                             </>
                         )
