@@ -21,7 +21,7 @@ const MakeExam = () => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        let exam_id = crypto.randomBytes(6).toString('hex');
+        let exam_id = crypto.randomBytes(8).toString('hex');
 
         const data = {
             name: name.current.value,
@@ -32,7 +32,7 @@ const MakeExam = () => {
 
         console.log(data);
 
-        history.push(`/exam/${exam_id}`);
+        history.push(`/prepare/${exam_id}`);
     }
     
     return (
