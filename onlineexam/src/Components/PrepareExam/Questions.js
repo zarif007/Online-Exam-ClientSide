@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Questions = ({props}) => {
+const Question = ({props}) => {
 
     const {quesion, options, answer} = props;
 
@@ -21,12 +21,12 @@ const Questions = ({props}) => {
                                 
                                 answer == vl ? 
                                 <div class="p-2 w-full">
-                                    <div class="border-2 border-gray-900 bg-gray-900 rounded flex p-4 h-full items-center">
+                                    <div class="border-2 border-gray-900 bg-gray-900  flex p-4 h-full items-center">
                                         <span class="title-font font-medium text-gray-100">{vl++}. {option}</span>
                                     </div>
                                 </div> :
                                 <div class="p-2 w-full">
-                                    <div class="border-2 border-gray-900 rounded flex p-4 h-full items-center">
+                                    <div class="border-2 border-gray-900  flex p-4 h-full items-center">
                                         <span class="title-font font-medium text-gray-900">{vl++}. {option}</span>
                                     </div>
                                 </div>
@@ -41,4 +41,4 @@ const Questions = ({props}) => {
     )
 }
 
-export default Questions
+export default Question
