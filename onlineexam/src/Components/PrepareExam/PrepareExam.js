@@ -94,7 +94,7 @@ const PrepareExam = () => {
                         ADD
                     </button>
                 </form>
-                <button class="flex mx-auto mt-16 mb-20 text-white bg-gray-900 border-0 py-2 px-8 focus:outline-none hover:bg-gray-800 rounded text-lg">Finish</button>
+                <button className="flex mx-auto mt-16 mb-20 text-white bg-gray-900 border-0 py-2 px-8 focus:outline-none hover:bg-gray-800 rounded text-lg">Finish</button>
             </div>
         </>
     )

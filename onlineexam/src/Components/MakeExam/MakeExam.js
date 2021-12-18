@@ -26,6 +26,7 @@ const MakeExam = () => {
         const data = {
             name: name.current.value,
             subject: subject.current.value,
+            assign_date: date.toLocaleDateString(),
             last_date: endDate.toLocaleDateString(),
             exam_id: exam_id,
         };
