@@ -6,7 +6,6 @@ const Question = ({props}) => {
 
     let optionCounter = 1;
 
-
     return (
         <>
         <section className="text-gray-600 body-font">
@@ -18,7 +17,7 @@ const Question = ({props}) => {
                     {
                         options.map(option => {
                             return (
-                                answer == optionCounter ? 
+                                parseInt(answer) === optionCounter ? 
                                 <div className="p-2 w-full">
                                     <div className="border-2 border-gray-900 bg-gray-900  flex p-4 h-full items-center">
                                         <span className="title-font font-medium text-gray-100">{optionCounter++}. {option}</span>
