@@ -1,6 +1,10 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Question from './Questions';
+
+import Axios from 'axios'
+import domain from "../../Domain";
+import ExamInfo from './ExamInfo';
 
 let crypto = require("crypto");
 
@@ -8,11 +12,25 @@ let crypto = require("crypto");
 const PrepareExam = () => {
 
     const [questions, setQuestions] = useState([]);
+    const [exam, setExam] = useState({});
     const {exam_id} = useParams();
 
+    useEffect(() => {
+        Axios.get(`${domain}exam/${exam_id}`)
+            .then(res => setExam(res.data[0]));
+    } ,[]);
+
+    useEffect(() => {
+        Axios.get(`${domain}question/${exam_id}`,)
+            .then(res => {
+                setQuestions(res.data);
+            });
+    }, []);
+
+    
     let count = 1;
 
-    let quesion = useRef('');
+    let question = useRef('');
     let options1 = useRef('');
     let options2 = useRef('');
     let options3 = useRef('');
@@ -27,30 +45,33 @@ const PrepareExam = () => {
         const data = {
             exam_id, 
             ques_id,
-            quesion: quesion.current.value,
-            options: [
-                options1.current.value,
-                options2.current.value, 
-                options3.current.value, 
-                options4.current.value
-            ],
+            question: question.current.value,
+            option1: options1.current.value,
+            option2: options2.current.value, 
+            option3: options3.current.value, 
+            option4: options4.current.value,
             answer: answer.current.value
         }
 
-        quesion.current.value = '';
+        Axios.post(`${domain}addquestion`, data)
+            .then(() => {
+                const newData = [...questions, data];
+                setQuestions(newData);
+            });
+
+        question.current.value = '';
         options1.current.value = '';
         options2.current.value = '';
         options3.current.value = '';
         options4.current.value = '';
         answer.current.value = '1';
-
-        const newData = [...questions, data];
-
-        setQuestions(newData);
     }
 
     return (
         <> 
+            {
+                <ExamInfo exam={exam}/>
+            }
             <div>
                 {
                     questions.map(ques => {
@@ -67,7 +88,7 @@ const PrepareExam = () => {
                     <h3 className="text-2xl text-gray-900 font-semibold">ADD Questions</h3>
                     
                     <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Question</label>
-                    <textarea ref={quesion} name="" id="" cols="10" rows="3" placeholder={quesion.current.value} className="border-2 border-gray-900 p-2 mt-3 w-full" required></textarea>
+                    <textarea ref={question} name="" id="" cols="10" rows="3" placeholder={question.current.value} className="border-2 border-gray-900 p-2 mt-3 w-full" required></textarea>
 
                     <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Option 1</label>
                     <input ref={options1} type="Options 1" name="" id="" placeholder={options1.current.value} className="border-2 border-gray-900 p-2 w-full mt-3" required/>

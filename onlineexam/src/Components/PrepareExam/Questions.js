@@ -2,7 +2,9 @@ import React from 'react'
 
 const Question = ({props}) => {
 
-    const {quesion, options, answer} = props;
+    const {question, option1, option2, option3, option4, answer} = props;
+
+    let options = [option1, option2, option3, option4];
 
     let optionCounter = 1;
 
@@ -11,7 +13,7 @@ const Question = ({props}) => {
         <section className="text-gray-600 body-font">
             <div className="container px-5 py-24 mx-auto">
                 <div className="text-start mb-12">
-                    <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-1">{quesion}</h1>
+                    <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-1">{question}</h1>
                 </div>
                 <div className="flex flex-wrap lg:w-5/5 sm:mx-auto sm:mb-2 -mx-2">
                     {

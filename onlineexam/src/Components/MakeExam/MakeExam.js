@@ -3,12 +3,16 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
+import Axios from 'axios'
+import domain from "../../Domain";
+
 
 let crypto = require("crypto");
 
 
 const MakeExam = () => {
     const [endDate, setEndDate] = useState(new Date());
+
     
     const name = useRef('');
     const subject = useRef('');
@@ -24,14 +28,15 @@ const MakeExam = () => {
         let exam_id = crypto.randomBytes(8).toString('hex');
 
         const data = {
+            exam_id: exam_id,
             name: name.current.value,
             subject: subject.current.value,
             assign_date: date.toLocaleDateString(),
             last_date: endDate.toLocaleDateString(),
-            exam_id: exam_id,
         };
 
-        console.log(data);
+        Axios.post(`${domain}makeexam`, data)
+            .then(() => {})
 
         history.push(`/prepare/${exam_id}`);
     }
