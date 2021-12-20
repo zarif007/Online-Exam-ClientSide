@@ -7,6 +7,7 @@ import domain from "../../Domain";
 import ExamInfo from './ExamInfo';
 import { useHistory } from 'react-router-dom';
 
+
 let crypto = require("crypto");
 
 
@@ -39,6 +40,7 @@ const PrepareExam = () => {
     let options3 = useRef('');
     let options4 = useRef('');
     let answer = useRef('');
+
 
     const handleSubmit = e => {
         e.preventDefault();

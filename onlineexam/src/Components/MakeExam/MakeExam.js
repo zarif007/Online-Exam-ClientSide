@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
 import Axios from 'axios'
 import domain from "../../Domain";
+import useAuth from '../../CustomHooks/useAuth';
 
 
 let crypto = require("crypto");
@@ -13,6 +14,7 @@ let crypto = require("crypto");
 const MakeExam = () => {
     const [endDate, setEndDate] = useState(new Date());
 
+    const { user, isLoading } = useAuth();
     
     const name = useRef('');
     const subject = useRef('');
@@ -21,6 +23,14 @@ const MakeExam = () => {
 
     const history = useHistory();
 
+    if(isLoading) {
+        return(
+            <div class="p-12 flex justify-center items-center">
+                <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+            </div>
+        )
+    }
+
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -28,6 +38,7 @@ const MakeExam = () => {
         let exam_id = crypto.randomBytes(8).toString('hex');
 
         const data = {
+            author: user.displayName,
             exam_id: exam_id,
             name: name.current.value,
             subject: subject.current.value,
