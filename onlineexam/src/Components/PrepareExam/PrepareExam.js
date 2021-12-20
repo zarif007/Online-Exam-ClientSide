@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import Question from './Questions';
+import Question from './Question';
 
 import Axios from 'axios'
 import domain from "../../Domain";
@@ -14,18 +14,14 @@ let crypto = require("crypto");
 const PrepareExam = () => {
 
     const [questions, setQuestions] = useState([]);
-    const [exam, setExam] = useState({});
     const {exam_id} = useParams();
 
     const history = useHistory();
 
-    useEffect(() => {
-        Axios.get(`${domain}exam/${exam_id}`)
-            .then(res => setExam(res.data[0]));
-    } ,[]);
+    
 
     useEffect(() => {
-        Axios.get(`${domain}question/${exam_id}`,)
+        Axios.get(`${domain}questions/${exam_id}`,)
             .then(res => {
                 setQuestions(res.data);
             });
@@ -75,7 +71,7 @@ const PrepareExam = () => {
     return (
         <> 
             {
-                <ExamInfo exam={exam}/>
+                <ExamInfo exam_id={exam_id}/>
             }
             <div>
                 {

@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Axios from 'axios'
+import domain from '../../Domain';
 
 
-const ExamInfo = ({exam}) => {
+const ExamInfo = ({exam_id}) => {
+
+    const [exam, setExam] = useState({});
+
+    useEffect(() => {
+        Axios.get(`${domain}exam/${exam_id}`)
+            .then(res => setExam(res.data[0]));
+    } ,[]);
 
     return (
         <section class="text-gray-600 body-font">

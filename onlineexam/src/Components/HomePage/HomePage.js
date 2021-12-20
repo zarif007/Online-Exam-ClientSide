@@ -10,7 +10,7 @@ const HomePage = () => {
             <div class="container mx-auto px-5 text-center">
                 <div class="mb-6">
                     <div class="space-y-4 mb-12">
-                        <h4 class="text-2xl sm:text-3xl font-semibold">WelCome to HailOnline</h4>
+                        <h4 class="text-2xl sm:text-3xl font-semibold">WelCome to Hail Online</h4>
                         <h1 class="lg:text-6xl sm:text-7xl font-bold">Make MCQ based Online Exams</h1>
                     </div>
                     <div className="grid justify-items-center">
