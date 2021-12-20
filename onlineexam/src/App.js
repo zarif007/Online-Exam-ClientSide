@@ -15,6 +15,7 @@ import Exam from './Components/Exam/Exam';
 import LogIn from './Components/Authentication/LogIn/LogIn';
 import AuthProvider from './Contexts/AuthProvider';
 import Register from './Components/Authentication/Register/Register';
+import PrivateRoute from './Components/Authentication/PrivateRoute/PrivateRoute';
 
 function App() {
   return (
@@ -26,15 +27,15 @@ function App() {
             <Route exact path='/'>
               <HomePage />
             </Route>
-            <Route exact path='/makeexam'>
+            <PrivateRoute exact path='/makeexam'>
               <MakeExam />
-            </Route>
-            <Route exact path='/prepare/:exam_id'>
+            </PrivateRoute>
+            <PrivateRoute exact path='/prepare/:exam_id'>
               <PrepareExam/>
-            </Route>
-            <Route exact path='/exam/:exam_id'>
+            </PrivateRoute>
+            <PrivateRoute exact path='/exam/:exam_id'>
               <Exam/>
-            </Route>
+            </PrivateRoute>
             <Route exact path='/login'>
               <LogIn/>
             </Route>
