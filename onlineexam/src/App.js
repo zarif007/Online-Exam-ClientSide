@@ -10,11 +10,14 @@ import {
 import HomePage from './Components/HomePage/HomePage';
 import MakeExam from './Components/MakeExam/MakeExam';
 import PrepareExam from './Components/PrepareExam/PrepareExam';
+import NavBar from './Components/NavBar/NavBar';
+import Exam from './Components/Exam/Exam';
 
 function App() {
   return (
     <div>
       <Router>
+        <NavBar/>
         <Switch>
           <Route exact path='/'>
             <HomePage />
@@ -26,7 +29,7 @@ function App() {
             <PrepareExam/>
           </Route>
           <Route exact path='/exam/:exam_id'>
-            <MakeExam />
+            <Exam/>
           </Route>
         </Switch>
       </Router>

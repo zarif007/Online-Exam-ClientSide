@@ -5,6 +5,7 @@ import Question from './Questions';
 import Axios from 'axios'
 import domain from "../../Domain";
 import ExamInfo from './ExamInfo';
+import { useHistory } from 'react-router-dom';
 
 let crypto = require("crypto");
 
@@ -14,6 +15,8 @@ const PrepareExam = () => {
     const [questions, setQuestions] = useState([]);
     const [exam, setExam] = useState({});
     const {exam_id} = useParams();
+
+    const history = useHistory();
 
     useEffect(() => {
         Axios.get(`${domain}exam/${exam_id}`)
@@ -65,7 +68,7 @@ const PrepareExam = () => {
         options3.current.value = '';
         options4.current.value = '';
         answer.current.value = '1';
-    }
+    };
 
     return (
         <> 
@@ -115,7 +118,7 @@ const PrepareExam = () => {
                         ADD
                     </button>
                 </form>
-                <button className="flex mx-auto mt-16 mb-20 text-white bg-gray-900 border-0 py-2 px-8 focus:outline-none hover:bg-gray-800 rounded text-lg">Finish</button>
+                <button onClick={() => history.push(`/exam/${exam_id}`)} className="flex mx-auto mt-16 mb-20 text-white bg-gray-900 border-0 py-2 px-8 focus:outline-none hover:bg-gray-800 rounded text-lg">Finish</button>
             </div>
         </>
     )
