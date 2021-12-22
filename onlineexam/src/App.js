@@ -16,6 +16,8 @@ import LogIn from './Components/Authentication/LogIn/LogIn';
 import AuthProvider from './Contexts/AuthProvider';
 import Register from './Components/Authentication/Register/Register';
 import PrivateRoute from './Components/Authentication/PrivateRoute/PrivateRoute';
+import Grades from './Components/Grades/Grades';
+
 
 function App() {
   return (
@@ -42,6 +44,9 @@ function App() {
             <Route exact path='/register'>
               <Register/>
             </Route>
+            <PrivateRoute exact path='/grades/:exam_id'>
+              <Grades/>
+            </PrivateRoute>
           </Switch>
         </Router>
       </AuthProvider>

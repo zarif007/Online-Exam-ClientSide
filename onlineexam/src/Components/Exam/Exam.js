@@ -4,10 +4,13 @@ import Axios from 'axios'
 import domain from "../../Domain";
 import Question from './Question';
 import ExamInfo from './../PrepareExam/ExamInfo';
+import { useHistory } from 'react-router-dom';
 
 const Exam = () => {
     const [questions, setQuestions] = useState([]);
     const {exam_id} = useParams();
+
+    const history = useHistory();
 
     useEffect(() => {
         Axios.get(`${domain}questions/${exam_id}`,)
@@ -22,6 +25,7 @@ const Exam = () => {
             {
                 <ExamInfo exam_id={exam_id}/>
             }
+
             {
                 questions.map(ques => {
                     return(
@@ -33,6 +37,10 @@ const Exam = () => {
                     )
                 })
             }
+
+            <button onClick={() => history.push(`/grades/${exam_id}`)} type="submit" className="mt-6 w-full h-24 py-3 font-medium text-xl tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
+                End exam
+            </button>
         </>
     )
 }

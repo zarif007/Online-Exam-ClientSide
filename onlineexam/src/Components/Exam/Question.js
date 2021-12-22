@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useAuth from './../../CustomHooks/useAuth';
 import Axios from 'axios';
 import domain from "../../Domain";
@@ -6,18 +6,30 @@ import domain from "../../Domain";
 
 const Question = ({props}) => {
 
-    const {question, option1, option2, option3, option4, answer, ques_id} = props;
+    const {exam_id, question, option1, option2, option3, option4, answer, ques_id} = props;
 
     const { user } = useAuth();
 
-    const [userAnswer, setUserAnswer] = useState(0);
+    const [userAnswer, setUserAnswer] = useState('');
     const [submitAvialble, setSubmitAvialble] = useState(true);
+
+    useEffect(() => {
+        Axios.get(`${domain}questions/${ques_id}/${user.uid}`)
+            .then(res => {
+                setUserAnswer(res?.data[0]?.userAnswer || '0');
+                
+                setSubmitAvialble(res?.data[0]?.userAnswer === undefined);
+                console.log(submitAvialble);
+            });
+    } ,[]);
+
 
     const handleSubmit = () =>{
 
         setSubmitAvialble(false);
 
         const response = {
+            exam_id,
             ques_id,
             user_id: user.uid,
             answer,
@@ -100,7 +112,7 @@ const Question = ({props}) => {
                         submitAvialble ? <button onClick={handleSubmit} className="flex mx-auto mt-6 mb-2 text-white bg-gray-900 border-0 py-2 px-8 focus:outline-none hover:bg-gray-800 rounded text-lg">Submit</button> :
                         <div>
                             <p className='mt-5 m-2 text-sm font-semibold text-blueGray-600'>Submitted</p>
-                            <button className="cursor-not-allowed flex mx-auto mt-6 mb-2 text-white bg-gray-900 border-0 py-2 px-8 focus:outline-none hover:bg-gray-800 rounded text-lg">Submit</button>
+                            <button className="cursor-not-allowed flex mx-auto mt-6 mb-2 text-white border-0 py-2 px-8 focus:outline-none bg-gray-800 rounded text-lg">Submit</button>
                         </div>
                     }
                     
