@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import useAuth from './../../CustomHooks/useAuth';
+import Axios from 'axios';
+import domain from "../../Domain";
 
 
 const Question = ({props}) => {
@@ -22,8 +24,8 @@ const Question = ({props}) => {
             userAnswer
         }
 
-        console.log(response)
-
+        Axios.post(`${domain}response`, response)
+            .then(() => {});
     }
 
 
@@ -41,12 +43,12 @@ const Question = ({props}) => {
                     
 
                     {
-                        userAnswer !== 1 ? <button onClick={() => setUserAnswer(1)} className="p-2 w-full">
+                        userAnswer !== '1' ? <button onClick={() => setUserAnswer('1')} className="p-2 w-full">
                             <div className="border-2 border-gray-900  flex p-4 h-full items-center">
                                 <span className="title-font font-medium text-gray-900">{optionCounter++}. {option1}</span>
                             </div>
                         </button> : 
-                        <button onClick={() => setUserAnswer(1)} className="p-2 w-full">
+                        <button onClick={() => setUserAnswer('1')} className="p-2 w-full">
                             <div className="border-2 border-gray-900 bg-gray-900  flex p-4 h-full items-center">
                                 <span className="title-font font-medium text-gray-100">{optionCounter++}. {option1}</span>
                             </div>
@@ -54,12 +56,12 @@ const Question = ({props}) => {
                     }
 
                     {
-                        userAnswer !== 2 ? <button onClick={() => setUserAnswer(2)} className="p-2 w-full">
+                        userAnswer !== '2' ? <button onClick={() => setUserAnswer('2')} className="p-2 w-full">
                             <div className="border-2 border-gray-900  flex p-4 h-full items-center">
                                 <span className="title-font font-medium text-gray-900">{optionCounter++}. {option2}</span>
                             </div>
                         </button> : 
-                        <button onClick={() => setUserAnswer(2)} className="p-2 w-full">
+                        <button onClick={() => setUserAnswer('2')} className="p-2 w-full">
                             <div className="border-2 border-gray-900 bg-gray-900  flex p-4 h-full items-center">
                                 <span className="title-font font-medium text-gray-100">{optionCounter++}. {option2}</span>
                             </div>
@@ -67,12 +69,12 @@ const Question = ({props}) => {
                     }
 
                     {
-                        userAnswer !== 3 ? <button onClick={() => setUserAnswer(3)} className="p-2 w-full">
+                        userAnswer !== '3' ? <button onClick={() => setUserAnswer('3')} className="p-2 w-full">
                             <div className="border-2 border-gray-900  flex p-4 h-full items-center">
                                 <span className="title-font font-medium text-gray-900">{optionCounter++}. {option3}</span>
                             </div>
                         </button> : 
-                        <button onClick={() => setUserAnswer(3)} className="p-2 w-full">
+                        <button onClick={() => setUserAnswer('3')} className="p-2 w-full">
                             <div className="border-2 border-gray-900 bg-gray-900  flex p-4 h-full items-center">
                                 <span className="title-font font-medium text-gray-100">{optionCounter++}. {option3}</span>
                             </div>
@@ -80,12 +82,12 @@ const Question = ({props}) => {
                     }
 
                     {
-                        userAnswer !== 4 ? <button onClick={() => setUserAnswer(4)} className="p-2 w-full">
+                        userAnswer !== '4' ? <button onClick={() => setUserAnswer('4')} className="p-2 w-full">
                             <div className="border-2 border-gray-900  flex p-4 h-full items-center">
                                 <span className="title-font font-medium text-gray-900">{optionCounter++}. {option4}</span>
                             </div>
                         </button> : 
-                        <button onClick={() => setUserAnswer(4)} className="p-2 w-full">
+                        <button onClick={() => setUserAnswer('4')} className="p-2 w-full">
                             <div className="border-2 border-gray-900 bg-gray-900  flex p-4 h-full items-center">
                                 <span className="title-font font-medium text-gray-100">{optionCounter++}. {option4}</span>
                             </div>
