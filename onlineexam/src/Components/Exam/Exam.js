@@ -5,12 +5,15 @@ import domain from "../../Domain";
 import Question from './Question';
 import ExamInfo from './../PrepareExam/ExamInfo';
 import { useHistory } from 'react-router-dom';
+import useAuth from './../../CustomHooks/useAuth';
 
 const Exam = () => {
     const [questions, setQuestions] = useState([]);
     const {exam_id} = useParams();
 
     const history = useHistory();
+
+    const { user } = useAuth();
 
     useEffect(() => {
         Axios.get(`${domain}questions/${exam_id}`,)

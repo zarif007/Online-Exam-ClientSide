@@ -32,13 +32,13 @@ const Grades = () => {
                             <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-100">{examInfo.name}</h1>
                                 <p class="text-gray-100 text-base pb-6">Subject: {examInfo.subject}</p>
                                 <p class="text-gray-100 text-base pb-8">Author: {examInfo.author}</p>
-                                <p class="text-gray-100 text-base pb-8">Examinee: {user.displayName}</p>
+                                <p class="text-gray-100 text-base pb-8">Examinee: {user.email}</p>
                             </div>
                         </div>
                     </figure>
                 
                 </div>
-                <div class="lg:max-w-lg lg:w-full md:w-1/2 w-1/2 sm:block hidden">
+                <div class="lg:max-w-lg lg:w-full md:w-1/2 w-full">
                 <div class="py-12 sm:py-12 md:py-6 lg:py-6 xl:py-6 px-8 w-full md:max-w-min sm:w-full bg-white z-30">
                         <h1 class="text-gray-500 font-semibold text-xl ">Grades</h1>
                             <div class="text-center py-4 px-7">
