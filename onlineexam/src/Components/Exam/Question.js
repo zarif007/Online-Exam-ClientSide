@@ -1,13 +1,32 @@
 import React, { useState } from 'react'
+import useAuth from './../../CustomHooks/useAuth';
 
 
 const Question = ({props}) => {
 
-    const {question, option1, option2, option3, option4, answer} = props;
+    const {question, option1, option2, option3, option4, answer, ques_id} = props;
 
-    
+    const { user } = useAuth();
 
     const [userAnswer, setUserAnswer] = useState(0);
+    const [submitAvialble, setSubmitAvialble] = useState(true);
+
+    const handleSubmit = () =>{
+
+        setSubmitAvialble(false);
+
+        const response = {
+            ques_id,
+            user_id: user.uid,
+            answer,
+            userAnswer
+        }
+
+        console.log(response)
+
+    }
+
+
 
     let optionCounter = 1;
 
@@ -72,8 +91,17 @@ const Question = ({props}) => {
                             </div>
                         </button>
                     }
-
+                    
+                    
                     </div>
+                    {
+                        submitAvialble ? <button onClick={handleSubmit} className="flex mx-auto mt-6 mb-2 text-white bg-gray-900 border-0 py-2 px-8 focus:outline-none hover:bg-gray-800 rounded text-lg">Submit</button> :
+                        <div>
+                            <p className='mt-5 m-2 text-sm font-semibold text-blueGray-600'>Submitted</p>
+                            <button className="cursor-not-allowed flex mx-auto mt-6 mb-2 text-white bg-gray-900 border-0 py-2 px-8 focus:outline-none hover:bg-gray-800 rounded text-lg">Submit</button>
+                        </div>
+                    }
+                    
                 </div>
             </section>
         </>

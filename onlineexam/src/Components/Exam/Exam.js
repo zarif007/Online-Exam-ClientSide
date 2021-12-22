@@ -27,7 +27,7 @@ const Exam = () => {
                     return(
                         <>  
                             {
-                                <Question key={ques.ques_id} props={ques} />
+                                <Question key={ques.ques_id} props={ques}/>
                             }
                         </>
                     )

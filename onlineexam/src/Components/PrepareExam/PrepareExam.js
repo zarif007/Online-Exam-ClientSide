@@ -19,7 +19,6 @@ const PrepareExam = () => {
     const history = useHistory();
 
     
-
     useEffect(() => {
         Axios.get(`${domain}questions/${exam_id}`,)
             .then(res => {

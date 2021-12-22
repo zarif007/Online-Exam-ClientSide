@@ -38,7 +38,7 @@ const MakeExam = () => {
         let exam_id = crypto.randomBytes(8).toString('hex');
 
         const data = {
-            author: user.displayName,
+            author: user.email,
             exam_id: exam_id,
             name: name.current.value,
             subject: subject.current.value,
