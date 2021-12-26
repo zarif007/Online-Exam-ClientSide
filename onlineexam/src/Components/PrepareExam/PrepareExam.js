@@ -14,6 +14,7 @@ let crypto = require("crypto");
 const PrepareExam = () => {
 
     const [questions, setQuestions] = useState([]);
+    const [exam, setExam] = useState({});
     const {exam_id} = useParams();
 
     const history = useHistory();
@@ -24,7 +25,11 @@ const PrepareExam = () => {
             .then(res => {
                 setQuestions(res.data);
             });
+        
+        Axios.get(`${domain}exam/${exam_id}`)
+            .then(res => setExam(res.data[0]));
     }, []);
+
 
     
     let count = 1;
@@ -70,7 +75,7 @@ const PrepareExam = () => {
     return (
         <> 
             {
-                <ExamInfo exam_id={exam_id}/>
+                <ExamInfo exam={exam}/>
             }
             <div>
                 {

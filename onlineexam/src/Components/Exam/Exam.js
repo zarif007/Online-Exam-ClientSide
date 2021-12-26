@@ -9,6 +9,8 @@ import useAuth from './../../CustomHooks/useAuth';
 
 const Exam = () => {
     const [questions, setQuestions] = useState([]);
+    const [exam, setExam] = useState({});
+    const [examIsAvailable, setExamIsAvailable] = useState(true);
     const {exam_id} = useParams();
 
     const history = useHistory();
@@ -20,13 +22,35 @@ const Exam = () => {
             .then(res => {
                 setQuestions(res.data);
             });
+        
+        Axios.get(`${domain}exam/${exam_id}`)
+            .then(res => setExam(res.data[0]));
     }, []);
+
+    useEffect(() => {
+        let assign = exam?.assign_date?.split('/');
+        let last = exam?.last_date?.split('/');
+
+        if(assign !== undefined){
+            if(assign[2] === last[2]){                           // Year matching
+                if(assign[0] === last[0])                        // Month matching
+                    setExamIsAvailable(assign[1] <= last[1]);    // Day matching
+                else   
+                    setExamIsAvailable(assign[0] < last[0]);     // Month matching
+            } else 
+                setExamIsAvailable(assign[2] < last[2]);         // Year matching
+        }
+    }, [exam]);
 
 
     return (
         <>
             {
-                <ExamInfo exam_id={exam_id}/>
+                examIsAvailable === true ? <p>ok</p> :
+                <p>not ok</p>
+            }
+            {
+                <ExamInfo exam={exam}/>
             }
 
             {
