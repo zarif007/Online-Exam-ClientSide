@@ -30,7 +30,6 @@ const PrepareExam = () => {
             .then(res => setExam(res.data[0]));
     }, []);
 
-
     
     let count = 1;
 

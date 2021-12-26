@@ -31,7 +31,20 @@ const Exam = () => {
         let assign = exam?.assign_date?.split('/');
         let last = exam?.last_date?.split('/');
 
-        if(assign !== undefined){
+        
+        if(assign !== undefined && last !== undefined){
+            if(assign[1]?.length === 1)
+                assign[1] = '0' + assign[1];
+
+            if(assign[0]?.length === 1)
+                assign[0] = '0' + assign[0];
+
+            if(last[1]?.length === 1)
+                last[1] = '0' + last[1];
+
+            if(last[0]?.length === 1)
+                last[0] = '0' + last[0];
+
             if(assign[2] === last[2]){                           // Year matching
                 if(assign[0] === last[0])                        // Month matching
                     setExamIsAvailable(assign[1] <= last[1]);    // Day matching
@@ -40,6 +53,8 @@ const Exam = () => {
             } else 
                 setExamIsAvailable(assign[2] < last[2]);         // Year matching
         }
+
+        console.log(examIsAvailable)
     }, [exam]);
 
 
@@ -75,9 +90,11 @@ const Exam = () => {
                 })
             }
 
-            <button onClick={() => history.push(`/grades/${exam_id}`)} type="submit" className="mt-6 w-full h-24 py-3 font-medium text-xl tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
-                End exam
-            </button>
+            {
+                examIsAvailable && <button onClick={() => history.push(`/grades/${exam_id}`)} type="submit" className="mt-6 w-full h-24 py-3 font-medium text-xl tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
+                    End exam
+                </button>
+            }
         </>
     )
 }
