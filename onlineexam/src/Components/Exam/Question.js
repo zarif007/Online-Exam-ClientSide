@@ -71,59 +71,73 @@ const Question = ({ props }) => {
 
                     <div className="flex flex-wrap lg:w-5/5 sm:mx-auto sm:mb-2 -mx-2">
                     
+                        {
+                            !examIsAvailable && answer === '1' && <i class="fas fa-check text-3xl" style={{color: 'green'}}></i>
+                        }
 
-                    {
-                        userAnswer !== '1' ? <button onClick={() => setUserAnswer('1')} className="p-2 w-full">
-                            <div className="border-2 border-gray-900  flex p-4 h-full items-center">
-                                <span className="title-font font-medium text-gray-900">{optionCounter++}. {option1}</span>
-                            </div>
-                        </button> : 
-                        <button onClick={() => setUserAnswer('1')} className="p-2 w-full">
-                            <div className="border-2 border-gray-900 bg-gray-900  flex p-4 h-full items-center">
-                                <span className="title-font font-medium text-gray-100">{optionCounter++}. {option1}</span>
-                            </div>
-                        </button>
-                    }
+                        {
+                            userAnswer !== '1' ? <button onClick={() => setUserAnswer('1')} className="p-2 w-full">
+                                <div className="border-2 border-gray-900  flex p-4 h-full items-center">
+                                    <span className="title-font font-medium text-gray-900">{optionCounter++}. {option1}</span>
+                                </div>
+                            </button> : 
+                            <button onClick={() => setUserAnswer('1')} className="p-2 w-full">
+                                <div className="border-2 border-gray-900 bg-gray-900  flex p-4 h-full items-center">
+                                    <span className="title-font font-medium text-gray-100">{optionCounter++}. {option1}</span>
+                                </div>
+                            </button>
+                        }
 
-                    {
-                        userAnswer !== '2' ? <button onClick={() => setUserAnswer('2')} className="p-2 w-full">
-                            <div className="border-2 border-gray-900  flex p-4 h-full items-center">
-                                <span className="title-font font-medium text-gray-900">{optionCounter++}. {option2}</span>
-                            </div>
-                        </button> : 
-                        <button onClick={() => setUserAnswer('2')} className="p-2 w-full">
-                            <div className="border-2 border-gray-900 bg-gray-900  flex p-4 h-full items-center">
-                                <span className="title-font font-medium text-gray-100">{optionCounter++}. {option2}</span>
-                            </div>
-                        </button>
-                    }
+                        {
+                            !examIsAvailable && answer === '2' && <i class="fas fa-check text-3xl" style={{color: 'green'}}></i>
+                        }
 
-                    {
-                        userAnswer !== '3' ? <button onClick={() => setUserAnswer('3')} className="p-2 w-full">
-                            <div className="border-2 border-gray-900  flex p-4 h-full items-center">
-                                <span className="title-font font-medium text-gray-900">{optionCounter++}. {option3}</span>
-                            </div>
-                        </button> : 
-                        <button onClick={() => setUserAnswer('3')} className="p-2 w-full">
-                            <div className="border-2 border-gray-900 bg-gray-900  flex p-4 h-full items-center">
-                                <span className="title-font font-medium text-gray-100">{optionCounter++}. {option3}</span>
-                            </div>
-                        </button>
-                    }
+                        {
+                            userAnswer !== '2' ? <button onClick={() => setUserAnswer('2')} className="p-2 w-full">
+                                <div className="border-2 border-gray-900  flex p-4 h-full items-center">
+                                    <span className="title-font font-medium text-gray-900">{optionCounter++}. {option2}</span>
+                                </div>
+                            </button> : 
+                            <button onClick={() => setUserAnswer('2')} className="p-2 w-full">
+                                <div className="border-2 border-gray-900 bg-gray-900  flex p-4 h-full items-center">
+                                    <span className="title-font font-medium text-gray-100">{optionCounter++}. {option2}</span>
+                                </div>
+                            </button>
+                        }
 
-                    {
-                        userAnswer !== '4' ? <button onClick={() => setUserAnswer('4')} className="p-2 w-full">
-                            <div className="border-2 border-gray-900  flex p-4 h-full items-center">
-                                <span className="title-font font-medium text-gray-900">{optionCounter++}. {option4}</span>
-                            </div>
-                        </button> : 
-                        <button onClick={() => setUserAnswer('4')} className="p-2 w-full">
-                            <div className="border-2 border-gray-900 bg-gray-900  flex p-4 h-full items-center">
-                                <span className="title-font font-medium text-gray-100">{optionCounter++}. {option4}</span>
-                            </div>
-                        </button>
-                    }
-                    
+                        {
+                            !examIsAvailable && answer === '3' && <i class="fas fa-check text-3xl" style={{color: 'green'}}></i>
+                        }
+
+                        {
+                            userAnswer !== '3' ? <button onClick={() => setUserAnswer('3')} className="p-2 w-full">
+                                <div className="border-2 border-gray-900  flex p-4 h-full items-center">
+                                    <span className="title-font font-medium text-gray-900">{optionCounter++}. {option3}</span>
+                                </div>
+                            </button> : 
+                            <button onClick={() => setUserAnswer('3')} className="p-2 w-full">
+                                <div className="border-2 border-gray-900 bg-gray-900  flex p-4 h-full items-center">
+                                    <span className="title-font font-medium text-gray-100">{optionCounter++}. {option3}</span>
+                                </div>
+                            </button>
+                        }
+
+                        {
+                            !examIsAvailable && answer === '4' && <i class="fas fa-check text-3xl" style={{color: 'green'}}></i>
+                        }
+
+                        {
+                            userAnswer !== '4' ? <button onClick={() => setUserAnswer('4')} className="p-2 w-full">
+                                <div className="border-2 border-gray-900  flex p-4 h-full items-center">
+                                    <span className="title-font font-medium text-gray-900">{optionCounter++}. {option4}</span>
+                                </div>
+                            </button> : 
+                            <button onClick={() => setUserAnswer('4')} className="p-2 w-full">
+                                <div className="border-2 border-gray-900 bg-gray-900  flex p-4 h-full items-center">
+                                    <span className="title-font font-medium text-gray-100">{optionCounter++}. {option4}</span>
+                                </div>
+                            </button>
+                        }
                     
                     </div>
 
