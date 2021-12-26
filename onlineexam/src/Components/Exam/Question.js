@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import useAuth from './../../CustomHooks/useAuth';
 import Axios from 'axios';
 import domain from "../../Domain";
+import examAvailability from '../../examAvailability';
 
 
 const Question = ({ props }) => {
@@ -14,6 +15,7 @@ const Question = ({ props }) => {
     const [exam, setExam] = useState({});
     const [examIsAvailable, setExamIsAvailable] = useState(true);
     const [submitAvailable, setSubmitAvailable] = useState(true);
+
 
     useEffect(() => {
         Axios.get(`${domain}questions/${ques_id}/${user.uid}`)
@@ -33,27 +35,8 @@ const Question = ({ props }) => {
         let assign = exam?.assign_date?.split('/');
         let last = exam?.last_date?.split('/');
 
-        if(assign !== undefined && last !== undefined){
-            if(assign[1]?.length === 1)
-                assign[1] = '0' + assign[1];
-
-            if(assign[0]?.length === 1)
-                assign[0] = '0' + assign[0];
-
-            if(last[1]?.length === 1)
-                last[1] = '0' + last[1];
-
-            if(last[0]?.length === 1)
-                last[0] = '0' + last[0];
-
-            if(assign[2] === last[2]){                           // Year matching
-                if(assign[0] === last[0])                        // Month matching
-                    setExamIsAvailable(assign[1] <= last[1]);    // Day matching
-                else   
-                    setExamIsAvailable(assign[0] < last[0]);     // Month matching
-            } else 
-                setExamIsAvailable(assign[2] < last[2]);         // Year matching
-        }
+        if(assign !== undefined && last !== undefined)
+            setExamIsAvailable(examAvailability(assign, last));
 
     }, [exam]);
 
