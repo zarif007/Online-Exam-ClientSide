@@ -45,9 +45,19 @@ const Exam = () => {
 
     return (
         <>
+            
             {
-                examIsAvailable === true ? <p>ok</p> :
-                <p>not ok</p>
+                examIsAvailable === true ? <div class="xl:w-1/1 md:w-1/1 w-full p-4 mx-auto container">
+                    <div class="border border-gray-600 p-6">
+                        <h2 class="text-5xl text-center text-gray-900 font-medium title-font mb-2">Exam On Going</h2>
+                        <p class="text-center text-gray-500 font-medium pt-4">Examinee: {user.email}</p>
+                    </div>
+                </div> :
+                <div class="xl:w-1/1 md:w-1/1 w-full p-4 mx-auto container">
+                    <div class="border border-gray-600 p-6">
+                        <h2 class="text-5xl text-center text-gray-900 font-medium title-font mb-2">Exam is Over</h2>
+                    </div>
+                </div>
             }
             {
                 <ExamInfo exam={exam}/>

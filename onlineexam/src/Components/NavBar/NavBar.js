@@ -15,21 +15,15 @@ const NavBar = () => {
               <span className="ml-3 text-xl">Hail Online</span>
             </Link>
             <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-              <Link to='/' className="mr-5 hover:text-gray-900">Exams</Link>
-              <Link to='/' className="mr-5 hover:text-gray-900">Profile</Link>
               {
                 user.displayName ? <div>
-                  <Link to='/login' className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 ml-2 md:mt-0">Profile</Link> 
-                  <button onClick={logOut} className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Log Out
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" strokeWidth="2" className="w-4 h-4 ml-1" viewBox="0 0 24 24">
-                      <path d="M5 12h14M12 5l7 7-7 7"></path>
-                    </svg>
+                  <span className='text-4xl p-4 mt-6 text-gray-900'><i className="fas fa-user-circle pt-4"></i></span>
+                  <button onClick={logOut} className="text-gray-900 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-lg mt-4 md:mt-0">Log Out
+                  <i class="fas fa-sign-out-alt text-xl p-2 text-gray-900"></i>
                   </button>
                 </div> : 
-                <Link to='/login' className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Log In
-                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" strokeWidth="2" className="w-4 h-4 ml-1" viewBox="0 0 24 24">
-                    <path d="M5 12h14M12 5l7 7-7 7"></path>
-                  </svg>
+                <Link to='/login' className="text-gray-900 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Log In
+                  <i class="fas fa-sign-in-alt text-xl p-2 text-gray-900"></i>
                 </Link>
               }
               
