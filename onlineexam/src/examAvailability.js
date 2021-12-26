@@ -1,15 +1,19 @@
-const examAvailability = (assign, last) => {
+const examAvailability = last => {
 
-    if(assign[1]?.length === 1)
+    let date = new Date();
+
+    let assign = date.toLocaleDateString().split('/');
+
+    if(assign[1].length === 1)
         assign[1] = '0' + assign[1];
 
-    if(assign[0]?.length === 1)
+    if(assign[0].length === 1)
         assign[0] = '0' + assign[0];
 
-    if(last[1]?.length === 1)
+    if(last[1].length === 1)
         last[1] = '0' + last[1];
 
-    if(last[0]?.length === 1)
+    if(last[0].length === 1)
         last[0] = '0' + last[0];
 
     if(assign[2] === last[2]){                           // Year matching

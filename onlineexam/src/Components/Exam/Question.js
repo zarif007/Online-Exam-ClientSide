@@ -32,11 +32,10 @@ const Question = ({ props }) => {
 
 
     useEffect(() => {
-        let assign = exam?.assign_date?.split('/');
         let last = exam?.last_date?.split('/');
 
-        if(assign !== undefined && last !== undefined)
-            setExamIsAvailable(examAvailability(assign, last));
+        if(last !== undefined)
+            setExamIsAvailable(examAvailability(last));
 
     }, [exam]);
 
