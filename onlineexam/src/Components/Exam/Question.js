@@ -3,6 +3,7 @@ import useAuth from './../../CustomHooks/useAuth';
 import Axios from 'axios';
 import domain from "../../Domain";
 import examAvailability from '../../examAvailability';
+import { Link } from 'react-router-dom';
 
 
 const Question = ({ props }) => {
@@ -15,6 +16,8 @@ const Question = ({ props }) => {
     const [exam, setExam] = useState({});
     const [examIsAvailable, setExamIsAvailable] = useState(true);
     const [submitAvailable, setSubmitAvailable] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [displaySettingsMenu, setDisplaySettingsMenu] = useState(false);
 
 
     useEffect(() => {
@@ -36,6 +39,9 @@ const Question = ({ props }) => {
 
         if(last !== undefined)
             setExamIsAvailable(examAvailability(last));
+
+        if(exam.author === user.email)
+            setIsAdmin(true);
 
     }, [exam]);
 
@@ -74,6 +80,7 @@ const Question = ({ props }) => {
                         {
                             !examIsAvailable && answer === '1' && <i class="fas fa-check text-3xl" style={{color: 'green'}}></i>
                         }
+
 
                         {
                             userAnswer !== '1' ? <button onClick={() => setUserAnswer('1')} className="p-2 w-full">
@@ -138,8 +145,31 @@ const Question = ({ props }) => {
                                 </div>
                             </button>
                         }
-                    
                     </div>
+                    
+                    
+                    {
+                        isAdmin && <div class="relative inline-flex p-2 text-xl container">
+                            <div>
+                                <button onClick={() => setDisplaySettingsMenu(!displaySettingsMenu)}><i class="fas fa-cog text-2xl text-gray-900"></i></button>
+                            </div>
+                            {
+                                displaySettingsMenu && <div class="flex items-center p-4 bg-white border-2 border-gray-200 rounded-lg shadow-sm dark:bg-gray-800">
+                                    <div>
+                                        <Link>
+                                            <i class="fas fa-edit p-1" style={{color: 'blue'}}></i>
+                                            <span class="mb-2 text-sm font-medium text-gray-900 pl-2">Update</span>
+                                        </Link>
+                                        <br />
+                                        <Link>
+                                            <i class="fas fa-trash-alt p-1" style={{color: 'red'}}></i>
+                                            <span class="mb-2 text-sm font-medium text-gray-900 pl-2">Delete</span>
+                                        </Link>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
 
                     {
                         examIsAvailable && 
@@ -153,7 +183,6 @@ const Question = ({ props }) => {
                             }
                         </>
                     }
-                    
                 </div>
             </section>
         </>

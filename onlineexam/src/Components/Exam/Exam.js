@@ -12,6 +12,7 @@ const Exam = () => {
     const [questions, setQuestions] = useState([]);
     const [exam, setExam] = useState({});
     const [examIsAvailable, setExamIsAvailable] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
     const {exam_id} = useParams();
 
     const history = useHistory();
@@ -34,6 +35,9 @@ const Exam = () => {
         if(last !== undefined)
             setExamIsAvailable(examAvailability(last));
 
+        if(exam.author === user.email)
+            setIsAdmin(true);
+
     }, [exam]);
 
 
@@ -44,7 +48,11 @@ const Exam = () => {
                 examIsAvailable === true ? <div class="xl:w-1/1 md:w-1/1 w-full p-4 mx-auto container">
                     <div class="border border-gray-600 p-6">
                         <h2 class="text-5xl text-center text-gray-900 font-medium title-font mb-2">Exam On Going</h2>
-                        <p class="text-center text-gray-500 font-medium pt-4">Examinee: {user.email}</p>
+                        {
+                            isAdmin ? <p class="text-center text-xl text-gray-800 font-bold pt-4">Admin Access</p> :
+                            <p class="text-center text-gray-500 font-medium pt-4">Examinee: {user.email}</p>
+                        }
+                        
                     </div>
                 </div> :
                 <div class="xl:w-1/1 md:w-1/1 w-full p-4 mx-auto container">

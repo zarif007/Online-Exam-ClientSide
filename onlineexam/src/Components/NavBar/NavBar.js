@@ -22,7 +22,7 @@ const NavBar = () => {
                   <i class="fas fa-sign-out-alt text-xl p-2 text-gray-900"></i>
                   </button>
                 </div> : 
-                <Link to='/login' className="text-gray-900 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Log In
+                <Link to='/login' className="text-gray-900 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-lg text-base mt-4 md:mt-0">Log In
                   <i class="fas fa-sign-in-alt text-xl p-2 text-gray-900"></i>
                 </Link>
               }
