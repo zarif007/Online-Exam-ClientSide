@@ -8,6 +8,7 @@ import ExamInfo from './ExamInfo';
 import { useHistory } from 'react-router-dom';
 
 
+
 let crypto = require("crypto");
 
 
@@ -92,7 +93,7 @@ const PrepareExam = () => {
                     <h3 className="text-2xl text-gray-900 font-semibold">ADD Questions</h3>
                     
                     <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Question</label>
-                    <textarea ref={question} name="" id="" cols="10" rows="3" placeholder={question.current.value} className="border-2 border-gray-900 p-2 mt-3 w-full" required></textarea>
+                    <textarea ref={question} id="" cols="10" rows="3" placeholder={question.current.value} className="border-2 border-gray-900 p-2 mt-3 w-full" required></textarea>
 
                     <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Option 1</label>
                     <input ref={options1} type="Options 1" name="" id="" placeholder={options1.current.value} className="border-2 border-gray-900 p-2 w-full mt-3" required/>
