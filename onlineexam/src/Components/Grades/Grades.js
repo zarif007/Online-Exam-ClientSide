@@ -1,6 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom';
 import useAuth from './../../CustomHooks/useAuth';
 import { useEffect, useState } from 'react';
 import Axios from 'axios'
@@ -13,6 +12,8 @@ const Grades = () => {
     const [examInfo, setExamInfo] = useState({})
 
     const { user } = useAuth();
+
+    const history = useHistory();
 
     useEffect(() => {
         Axios.get(`${domain}grades/${exam_id}/${user.uid}`)
@@ -46,7 +47,7 @@ const Grades = () => {
                                 
                             </div>
                             <div class="h-px bg-gray-200"></div>
-                            <button class="w-full mt-6 mb-3 py-2 text-white font-semibold bg-gray-900 hover:shadow-xl duration-200 hover:bg-gray-800">See Currect Answers</button>
+                            <button onClick={() => history.push(`/exam/${exam_id}`)} class="w-full mt-6 mb-3 py-2 text-white font-semibold bg-gray-900 hover:shadow-xl duration-200 hover:bg-gray-800">See Currect Answers</button>
                         </div>
                 </div>
             </div>
