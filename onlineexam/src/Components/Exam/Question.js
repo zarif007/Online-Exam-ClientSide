@@ -3,7 +3,7 @@ import useAuth from './../../CustomHooks/useAuth';
 import Axios from 'axios';
 import domain from "../../Domain";
 import examAvailability from '../../examAvailability';
-import { Link } from 'react-router-dom';
+import swal from 'sweetalert';
 
 
 const Question = ({ props }) => {
@@ -91,16 +91,40 @@ const Question = ({ props }) => {
                 setFullQuestion(data);
                 setUpdateMode(false);
                 setDisplaySettingsMenu(false);
+                swal({
+                    title: "Updated!",
+                    text: "Question Updated successfully!",
+                    icon: "success",
+                    button: "ok!",
+                  });
             });
     };
 
     const handleDelete = () => {
-        Axios.delete(`${domain}deletequestion/${ques_id}`)
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+        if (willDelete) {
+            Axios.delete(`${domain}deletequestion/${ques_id}`)
             .then(() => {
                 setFullQuestion({});
                 setDisplayQuestion(false);
                 setDisplaySettingsMenu(false);
-            })
+            });
+            swal("Question Deleted successfully!", {
+            icon: "success",
+            });
+        } else {
+            swal("Deletation operation dropped!");
+        }
+        });
+
+        
     }
 
 

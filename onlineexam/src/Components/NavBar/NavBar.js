@@ -18,11 +18,11 @@ const NavBar = () => {
               {
                 user.displayName ? <div>
                   <span className='text-4xl p-4 mt-6 text-gray-900'><i className="fas fa-user-circle pt-4"></i></span>
-                  <button onClick={logOut} className="text-gray-900 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-lg mt-4 md:mt-0">Log Out
+                  <button onClick={logOut} className="border-2 border-gray-900 font-semibold leading-none text-gray-900 py-1 px-2 hover:border-gray-800 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:outline-none">Log Out
                   <i class="fas fa-sign-out-alt text-xl p-2 text-gray-900"></i>
                   </button>
                 </div> : 
-                <Link to='/login' className="text-gray-900 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-lg text-base mt-4 md:mt-0">Log In
+                <Link to='/login' className="border-2 border-gray-900 font-semibold leading-none text-gray-900 py-1 px-2 hover:border-gray-800 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:outline-none">Log In
                   <i class="fas fa-sign-in-alt text-xl p-2 text-gray-900"></i>
                 </Link>
               }
