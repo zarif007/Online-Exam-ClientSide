@@ -32,13 +32,21 @@ const Exam = () => {
     useEffect(() => {
         let last = exam?.last_date?.split('/');
 
-        if(last !== undefined)
-            setExamIsAvailable(examAvailability(last));
+        if(last !== undefined){
+            Axios.get(`${domain}participate/${exam_id}/${user.uid}`)
+                .then(res => setExamIsAvailable(res.data.length === 0 && examAvailability(last)));
+        }
 
         if(exam.author === user.email)
             setIsAdmin(true);
 
     }, [exam]);
+
+    const handleEndExam = () => {
+        Axios.post(`${domain}participate/${exam_id}/${user.uid}`)
+            .then(() => {});
+        history.push(`/grades/${exam_id}`)
+    }
 
 
     return (
@@ -78,8 +86,11 @@ const Exam = () => {
             }
 
             {
-                examIsAvailable && <button onClick={() => history.push(`/grades/${exam_id}`)} type="submit" className="mt-6 w-full h-24 py-3 font-medium text-xl tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
+                examIsAvailable ? <button onClick={handleEndExam} type="submit" className="mt-6 w-full h-24 py-3 font-medium text-xl tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
                     End exam
+                </button> :
+                <button onClick={() => history.push(`/grades/${exam_id}`)} type="submit" className="mt-6 w-full h-24 py-3 font-medium text-xl tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
+                    See Grades
                 </button>
             }
         </>
