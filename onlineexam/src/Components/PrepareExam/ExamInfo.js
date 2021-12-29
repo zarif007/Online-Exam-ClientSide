@@ -1,9 +1,8 @@
 import React from 'react'
+import dateFormatter from '../../dateFormatter'
 
 
 const ExamInfo = ({ exam }) => {
-
-    console.log(exam);
 
     return (
         <section class="text-gray-600 body-font">
@@ -56,7 +55,7 @@ const ExamInfo = ({ exam }) => {
                             </svg>
                         </div>
                         <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Assign Date</h2>
-                        <p class="leading-relaxed text-base">{exam.assign_date}</p>
+                        <p class="leading-relaxed text-base">{dateFormatter(exam.assign_date)}</p>
                         </div>
                     </div>
                     <div class="xl:w-2/6 md:w-1/2 w-full p-4">
@@ -67,7 +66,7 @@ const ExamInfo = ({ exam }) => {
                             </svg>
                         </div>
                         <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Laste Date</h2>
-                        <p class="leading-relaxed text-base">{exam.last_date}</p>
+                        <p class="leading-relaxed text-base">{dateFormatter(exam.last_date)}</p>
                         </div>
                     </div>
                     <div class="xl:w-2/6 md:w-1/2 w-full p-4">

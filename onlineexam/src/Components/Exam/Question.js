@@ -74,7 +74,6 @@ const Question = ({ props }) => {
     const handleUpdate = e => {
         e.preventDefault();
 
-
         const data = {
             exam_id, 
             ques_id,
@@ -123,8 +122,6 @@ const Question = ({ props }) => {
             swal("Deletation operation dropped!");
         }
         });
-
-        
     }
 
 
