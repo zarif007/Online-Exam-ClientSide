@@ -9,7 +9,8 @@ const Grades = () => {
 
     const { exam_id } = useParams();
 
-    const [examInfo, setExamInfo] = useState({})
+    const [examInfo, setExamInfo] = useState({});
+    const [addToPerticipate, setAddToPerticipate] = useState(false);
 
     const { user } = useAuth();
 
@@ -18,7 +19,23 @@ const Grades = () => {
     useEffect(() => {
         Axios.get(`${domain}grades/${exam_id}/${user.uid}`)
             .then(res => setExamInfo(res.data));
+        
+        Axios.get(`${domain}participate/${exam_id}/${user.uid}`)
+            .then(res => setAddToPerticipate(res.data.length === 0));
     }, [])
+
+    useEffect(() => {
+        const data = {
+            currect_answer: examInfo.currect_answer,
+            total_ques: examInfo.total_ques,
+        }
+        
+        if(data.currect_answer !== undefined && addToPerticipate){
+            console.log('data', data)
+            Axios.post(`${domain}participate/${exam_id}/${user.uid}`, data)
+                .then(() => {});
+        }
+    }, [examInfo])
 
     return (
         <>

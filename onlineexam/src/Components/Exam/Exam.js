@@ -12,7 +12,6 @@ import AdminInfo from '../AdminInfo/AdminInfo';
 const Exam = () => {
     const [questions, setQuestions] = useState([]);
     const [exam, setExam] = useState({});
-    const [grade, setGrade] = useState({});
     const [examIsAvailable, setExamIsAvailable] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
     const {exam_id} = useParams();
@@ -30,8 +29,6 @@ const Exam = () => {
         Axios.get(`${domain}exam/${exam_id}`)
             .then(res => setExam(res.data[0]));
 
-        Axios.get(`${domain}grades/${exam_id}/${user.uid}`)
-            .then(res => setGrade(res.data));
     }, []);
 
     useEffect(() => {
@@ -46,20 +43,6 @@ const Exam = () => {
             setIsAdmin(true);
 
     }, [exam]);
-
-
-    const handleEndExam = () => {
-
-        const data = {
-            currect_answer: grade.currect_answer,
-            total_ques: grade.total_ques,
-        }
-
-        Axios.post(`${domain}participate/${exam_id}/${user.uid}`, data)
-            .then(() => {});
-
-        history.push(`/grades/${exam_id}`)
-    }
 
 
     return (
@@ -103,7 +86,7 @@ const Exam = () => {
             }
 
             {
-                examIsAvailable ? <button onClick={handleEndExam} type="submit" className="mt-6 w-full h-24 py-3 font-medium text-xl tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
+                examIsAvailable ? <button onClick={() => history.push(`/grades/${exam_id}`)} type="submit" className="mt-6 w-full h-24 py-3 font-medium text-xl tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
                     End exam
                 </button> :
                 <button onClick={() => history.push(`/grades/${exam_id}`)} type="submit" className="mt-6 w-full h-24 py-3 font-medium text-xl tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
