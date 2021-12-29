@@ -4,8 +4,8 @@ import Question from './Question';
 
 import Axios from 'axios'
 import domain from "../../Domain";
-import ExamInfo from './ExamInfo';
 import { useHistory } from 'react-router-dom';
+import ExamInfo from '../ExamInfo/ExamInfo';
 
 
 

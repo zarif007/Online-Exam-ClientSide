@@ -3,14 +3,16 @@ import { useParams } from 'react-router-dom';
 import Axios from 'axios'
 import domain from "../../Domain";
 import Question from './Question';
-import ExamInfo from './../PrepareExam/ExamInfo';
 import { useHistory } from 'react-router-dom';
 import useAuth from './../../CustomHooks/useAuth';
 import examAvailability from '../../examAvailability';
+import ExamInfo from '../ExamInfo/ExamInfo';
+import AdminInfo from '../AdminInfo/AdminInfo';
 
 const Exam = () => {
     const [questions, setQuestions] = useState([]);
     const [exam, setExam] = useState({});
+    const [grade, setGrade] = useState({});
     const [examIsAvailable, setExamIsAvailable] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
     const {exam_id} = useParams();
@@ -27,6 +29,9 @@ const Exam = () => {
         
         Axios.get(`${domain}exam/${exam_id}`)
             .then(res => setExam(res.data[0]));
+
+        Axios.get(`${domain}grades/${exam_id}/${user.uid}`)
+            .then(res => setGrade(res.data));
     }, []);
 
     useEffect(() => {
@@ -42,9 +47,17 @@ const Exam = () => {
 
     }, [exam]);
 
+
     const handleEndExam = () => {
-        Axios.post(`${domain}participate/${exam_id}/${user.uid}`)
+
+        const data = {
+            currect_answer: grade.currect_answer,
+            total_ques: grade.total_ques,
+        }
+
+        Axios.post(`${domain}participate/${exam_id}/${user.uid}`, data)
             .then(() => {});
+
         history.push(`/grades/${exam_id}`)
     }
 
@@ -69,9 +82,13 @@ const Exam = () => {
                     </div>
                 </div>
             }
+
             {
-                <ExamInfo exam={exam}/>
+                isAdmin && <AdminInfo exam_id={exam_id} />
             }
+
+            <ExamInfo exam={exam}/>
+
 
             {
                 questions.map(ques => {
