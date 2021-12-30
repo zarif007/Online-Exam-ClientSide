@@ -30,7 +30,7 @@ const Grades = () => {
             total_ques: examInfo.total_ques,
         }
         
-        if(data.currect_answer !== undefined && addToPerticipate){
+        if(data.currect_answer !== undefined){
             console.log('data', data)
             Axios.post(`${domain}participate/${exam_id}/${user.uid}`, data)
                 .then(() => {});

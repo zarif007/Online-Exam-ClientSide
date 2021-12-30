@@ -16,7 +16,6 @@ const AdminInfo = ({ exam_id }) => {
 
                 res.data.map(rs => marks.push(parseInt(rs.currect_answer)));
                 setTotalParticipants(marks.length);
-                setTotalQuestions(res.data[0].total_ques)
                 if(totalParticipants === 0){
                     setHighestMark(0);
                     setLowestMark(0);
@@ -26,6 +25,11 @@ const AdminInfo = ({ exam_id }) => {
                 }
             });
     }, [totalParticipants]);
+
+    useEffect(() => {
+        Axios.get(`${domain}questions/${exam_id}`)
+            .then(res => setTotalQuestions(res.data.length))
+    }, [])
     
     return (
         <section class="text-gray-600 body-font">
