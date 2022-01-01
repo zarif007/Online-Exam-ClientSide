@@ -4,6 +4,7 @@ import Axios from 'axios';
 import domain from "../../Domain";
 import examAvailability from '../../examAvailability';
 import swal from 'sweetalert';
+import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 
 
 const Question = ({ props }) => {
@@ -19,6 +20,7 @@ const Question = ({ props }) => {
     const [displaySettingsMenu, setDisplaySettingsMenu] = useState(false);
     const [updateMode, setUpdateMode] = useState(false);
     const [displayQuestion, setDisplayQuestion] = useState(true);
+    const [displayPieChart, setDisplayPieChart] = useState(false);
 
     const {exam_id, question, option1, option2, option3, option4, answer, ques_id} = fullQuestion;
 
@@ -124,16 +126,40 @@ const Question = ({ props }) => {
         });
     }
 
+    const data = [
+        { name: 'Group A', value: 2 },
+        { name: 'Group B', value: 3 },
+        { name: 'Group C', value: 5 },
+        { name: 'Group D', value: 8 },
+      ];
+
+    const COLORS = ['#64748b', '#0c4a6e', '#164e63', '#1f2937'];
+
+    const RADIAN = Math.PI / 180;
+    const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+        const x = cx + radius * Math.cos(-midAngle * RADIAN);
+        const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+        return (
+            <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+            {`${(percent * 100).toFixed(0)}%`}
+            </text>
+        );
+    };
+
+    
 
     let optionCounter = 1;
 
     return (
         <>
+            
             {
                 displayQuestion &&
                 <section className="text-gray-600 body-font">
                     {   
-                        !updateMode ?
+                        (!updateMode && !displayPieChart) ?
                         <div className="container px-5 py-24 mx-auto">
                             <div className="text-start mb-12">
                                 <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-1">{question}</h1>
@@ -210,12 +236,17 @@ const Question = ({ props }) => {
                                     </button>
                                 }
                             </div>
-                            
-                            
+
                             {
                                 isAdmin && <div class="relative inline-flex p-2 text-xl container">
                                     <div>
                                         <button onClick={() => setDisplaySettingsMenu(() => !displaySettingsMenu)}><i class="fas fa-cog text-2xl text-gray-900"></i></button>
+                                    </div>
+                                    <div>
+                                        <button onClick={() => {
+                                            setDisplayPieChart(() => !displayPieChart);
+                                            setUpdateMode(false);
+                                        }}><i class="fas fa-chart-pie text-2xl text-gray-900"></i></button>
                                     </div>
                                     {
                                         displaySettingsMenu && <div class="flex items-center p-4 bg-white border-2 border-gray-200 rounded-lg shadow-sm dark:bg-gray-800">
@@ -248,45 +279,70 @@ const Question = ({ props }) => {
                                 </>
                             }
                         </div> :
-                        <form onSubmit={handleUpdate} className="container mx-auto form bg-white p-6 relative">
-                            <h3 className="text-2xl text-gray-900 font-semibold">ADD Questions</h3>
-                            
-                            <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Question</label>
-                            <textarea ref={updatedQuestion} name="" id="" cols="10" rows="3" placeholder={question} className="border-2 border-gray-900 p-2 mt-3 w-full" required>{question}</textarea>
-
-                            <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Option 1</label>
-                            <input ref={updatedOption1} type="Options 1" name="" id="" placeholder={option1} className="border-2 border-gray-900 p-2 w-full mt-3" defaultValue={option1} required />
-
-                            <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Option 2</label>
-                            <input ref={updatedOption2} type="Options 2" name="" id="" placeholder={option2} className="border-2 border-gray-900 p-2 w-full mt-3" defaultValue={option2} required />
-
-                            <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Option 3</label>
-                            <input ref={updatedOption3} type="Options 3" name="" id="" placeholder={option3} className="border-2 border-gray-900 p-2 w-full mt-3" defaultValue={option3} required />
-
-                            <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Option 4</label>
-                            <input ref={updatedOption4} type="Options 4" name="" id="" placeholder={option4} className="border-2 border-gray-900 p-2 w-full mt-3" defaultValue={option4} required />
-
-                            <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Answer</label>
-
-                            <select id="Com" ref={updatedAnswer} defaultValue={answer} className="mt-2 text-base text-gray-800 outline-none border-2 border-gray-900-2 px-4 py-2 rounded-lg">
-                                <option value="1">options 1</option>
-                                <option value="2">options 2</option>
-                                <option value="3">options 3</option>
-                                <option value="4">options 4</option>
-                            </select> <br />
-                            
-                            <div>
-                                <button type="submit" className="mr-2 mx-auto mt-9 border-2 border-gray-900 font-semibold leading-none text-white py-4 px-10 bg-gray-900 hover:border-gray-800 rounded hover:bg-gray-800 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:outline-none">
-                                    Update
-                                </button>
+                        <>
+                            {
+                                updateMode? <form onSubmit={handleUpdate} className="container mx-auto form bg-white p-6 relative">
+                                    <h3 className="text-2xl text-gray-900 font-semibold">ADD Questions</h3>
+                                    
+                                    <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Question</label>
+                                    <textarea ref={updatedQuestion} name="" id="" cols="10" rows="3" placeholder={question} className="border-2 border-gray-900 p-2 mt-3 w-full" required>{question}</textarea>
+        
+                                    <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Option 1</label>
+                                    <input ref={updatedOption1} type="Options 1" name="" id="" placeholder={option1} className="border-2 border-gray-900 p-2 w-full mt-3" defaultValue={option1} required />
+        
+                                    <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Option 2</label>
+                                    <input ref={updatedOption2} type="Options 2" name="" id="" placeholder={option2} className="border-2 border-gray-900 p-2 w-full mt-3" defaultValue={option2} required />
+        
+                                    <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Option 3</label>
+                                    <input ref={updatedOption3} type="Options 3" name="" id="" placeholder={option3} className="border-2 border-gray-900 p-2 w-full mt-3" defaultValue={option3} required />
+        
+                                    <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Option 4</label>
+                                    <input ref={updatedOption4} type="Options 4" name="" id="" placeholder={option4} className="border-2 border-gray-900 p-2 w-full mt-3" defaultValue={option4} required />
+        
+                                    <label  className="block text-xs font-semibold text-gray-600 uppercase pt-2">Answer</label>
+        
+                                    <select id="Com" ref={updatedAnswer} defaultValue={answer} className="mt-2 text-base text-gray-800 outline-none border-2 border-gray-900-2 px-4 py-2 rounded-lg">
+                                        <option value="1">options 1</option>
+                                        <option value="2">options 2</option>
+                                        <option value="3">options 3</option>
+                                        <option value="4">options 4</option>
+                                    </select> <br />
+                                    
+                                    <div>
+                                        <button type="submit" className="mr-2 mx-auto mt-9 border-2 border-gray-900 font-semibold leading-none text-white py-4 px-10 bg-gray-900 hover:border-gray-800 rounded hover:bg-gray-800 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:outline-none">
+                                            Update
+                                        </button>
+                                        <button onClick={() => {
+                                            setUpdateMode(false);
+                                            setDisplaySettingsMenu(false);
+                                        }} className="mx-auto mt-9 border-2 border-red-900 font-semibold leading-none text-white py-4 px-10 bg-red-900 hover:border-red-800 rounded hover:bg-red-800 focus:ring-2 focus:ring-offset-2 focus:ring-red-900 focus:outline-none">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form> : 
                                 <button onClick={() => {
-                                    setUpdateMode(false);
-                                    setDisplaySettingsMenu(false);
-                                }} className="mx-auto mt-9 border-2 border-red-900 font-semibold leading-none text-white py-4 px-10 bg-red-900 hover:border-red-800 rounded hover:bg-red-800 focus:ring-2 focus:ring-offset-2 focus:ring-red-900 focus:outline-none">
-                                    Cancel
+                                    setDisplayPieChart(false);
+                                    setUpdateMode(false)}}
+                                     class="container mx-auto flex px-5 mt-2 items-center justify-center flex-col">
+                                    <PieChart width={300} height={300}>
+                                        <Pie
+                                            data={data}
+                                            cx="50%"
+                                            cy="50%"
+                                            labelLine={false}
+                                            label={renderCustomizedLabel}
+                                            outerRadius={120}
+                                            fill="#8884d8"
+                                            dataKey="value"
+                                        >
+                                            {data.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                            ))}
+                                        </Pie>
+                                    </PieChart>
                                 </button>
-                            </div>
-                        </form>
+                            }
+                        </>
                     }
                 </section>
             }       
