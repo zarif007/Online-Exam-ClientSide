@@ -127,15 +127,17 @@ const Question = ({ props }) => {
     }
 
     const data = [
-        { name: 'Group A', value: 2 },
-        { name: 'Group B', value: 3 },
-        { name: 'Group C', value: 5 },
-        { name: 'Group D', value: 8 },
+        { name: 'Group A', value: 1 },
+        { name: 'Group B', value: 2 },
+        { name: 'Group C', value: 3 },
+        { name: 'Group D', value: 4 },
       ];
 
-    const COLORS = ['#64748b', '#0c4a6e', '#164e63', '#1f2937'];
+    const COLORS = ['#4c1d95', '#701a75', '#831843', '#312e81'];
 
     const RADIAN = Math.PI / 180;
+    
+    let cnt = 1;
     const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
         const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -143,12 +145,10 @@ const Question = ({ props }) => {
 
         return (
             <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-            {`${(percent * 100).toFixed(0)}%`}
+                {`${cnt++}. ${(percent * 100).toFixed(0)}%`}
             </text>
         );
     };
-
-    
 
     let optionCounter = 1;
 
@@ -168,7 +168,7 @@ const Question = ({ props }) => {
                             <div className="flex flex-wrap lg:w-5/5 sm:mx-auto sm:mb-2 -mx-2">
                             
                                 {
-                                    (!examIsAvailable || isAdmin) && answer === '1' && <i class="fas fa-check text-3xl" style={{color: 'green'}}></i>
+                                    (!examIsAvailable || isAdmin) && answer === '1' && <i className="fas fa-check text-3xl" style={{color: 'green'}}></i>
                                 }
 
 
@@ -186,7 +186,7 @@ const Question = ({ props }) => {
                                 }
 
                                 {
-                                    (!examIsAvailable || isAdmin) && answer === '2' && <i class="fas fa-check text-3xl" style={{color: 'green'}}></i>
+                                    (!examIsAvailable || isAdmin) && answer === '2' && <i className="fas fa-check text-3xl" style={{color: 'green'}}></i>
                                 }
 
                                 {
@@ -203,7 +203,7 @@ const Question = ({ props }) => {
                                 }
 
                                 {
-                                    (!examIsAvailable || isAdmin) && answer === '3' && <i class="fas fa-check text-3xl" style={{color: 'green'}}></i>
+                                    (!examIsAvailable || isAdmin) && answer === '3' && <i className="fas fa-check text-3xl" style={{color: 'green'}}></i>
                                 }
 
                                 {
@@ -220,7 +220,7 @@ const Question = ({ props }) => {
                                 }
 
                                 {
-                                    (!examIsAvailable || isAdmin) && answer === '4' && <i class="fas fa-check text-3xl" style={{color: 'green'}}></i>
+                                    (!examIsAvailable || isAdmin) && answer === '4' && <i className="fas fa-check text-3xl" style={{color: 'green'}}></i>
                                 }
 
                                 {
@@ -238,27 +238,27 @@ const Question = ({ props }) => {
                             </div>
 
                             {
-                                isAdmin && <div class="relative inline-flex p-2 text-xl container">
+                                isAdmin && <div className="relative inline-flex p-2 text-xl container">
                                     <div>
-                                        <button onClick={() => setDisplaySettingsMenu(() => !displaySettingsMenu)}><i class="fas fa-cog text-2xl text-gray-900"></i></button>
+                                        <button className='mr-4' onClick={() => setDisplaySettingsMenu(() => !displaySettingsMenu)}><i className="fas fa-cog text-2xl text-gray-900"></i></button>
                                     </div>
                                     <div>
                                         <button onClick={() => {
                                             setDisplayPieChart(() => !displayPieChart);
                                             setUpdateMode(false);
-                                        }}><i class="fas fa-chart-pie text-2xl text-gray-900"></i></button>
+                                        }}><i className="fas fa-chart-pie text-2xl text-gray-900"></i></button>
                                     </div>
                                     {
-                                        displaySettingsMenu && <div class="flex items-center p-4 bg-white border-2 border-gray-200 rounded-lg shadow-sm dark:bg-gray-800">
+                                        displaySettingsMenu && <div className="flex items-center p-4 bg-white border-2 border-gray-200 rounded-lg shadow-sm dark:bg-gray-800">
                                             <div>
                                                 <button onClick={() => setUpdateMode(true)}>
-                                                    <i class="fas fa-edit p-1" style={{color: 'blue'}}></i>
-                                                    <span class="mb-2 text-sm font-medium text-gray-900 hover:text-gray-600 pl-2">Update</span>
+                                                    <i className="fas fa-edit p-1" style={{color: 'blue'}}></i>
+                                                    <span className="mb-2 text-sm font-medium text-gray-900 hover:text-gray-600 pl-2">Update</span>
                                                 </button>
                                                 <br />
                                                 <button onClick={handleDelete}>
-                                                    <i class="fas fa-trash-alt p-1" style={{color: 'red'}}></i>
-                                                    <span class="mb-2 text-sm font-medium text-gray-900 hover:text-gray-600 pl-2">Delete</span>
+                                                    <i className="fas fa-trash-alt p-1" style={{color: 'red'}}></i>
+                                                    <span className="mb-2 text-sm font-medium text-gray-900 hover:text-gray-600 pl-2">Delete</span>
                                                 </button>
                                             </div>
                                         </div>
@@ -323,23 +323,34 @@ const Question = ({ props }) => {
                                 <button onClick={() => {
                                     setDisplayPieChart(false);
                                     setUpdateMode(false)}}
-                                     class="container mx-auto flex px-5 mt-2 items-center justify-center flex-col">
-                                    <PieChart width={300} height={300}>
-                                        <Pie
-                                            data={data}
-                                            cx="50%"
-                                            cy="50%"
-                                            labelLine={false}
-                                            label={renderCustomizedLabel}
-                                            outerRadius={120}
-                                            fill="#8884d8"
-                                            dataKey="value"
-                                        >
-                                            {data.map((entry, index) => (
-                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                            ))}
-                                        </Pie>
-                                    </PieChart>
+                                    
+                                    className="container mx-auto flex px-5 mt-2 items-center justify-center flex-col border border-2">
+                                    <div className='flex flex-wrap'>
+                                        <div className='p-4 md:w-1/2 flex px-5 mt-2 items-center justify-center flex-col'>
+                                            <PieChart width={300} height={300}>
+                                                <Pie
+                                                    data={data}
+                                                    cx="50%"
+                                                    cy="50%"
+                                                    labelLine={false}
+                                                    label={renderCustomizedLabel}
+                                                    outerRadius={120}
+                                                    fill="#8884d8"
+                                                    dataKey="value"
+                                                >
+                                                    {data.map((entry, index) => (
+                                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                    ))}
+                                                </Pie>
+                                            </PieChart>
+                                        </div>
+                                        <div className='p-4 md:w-1/2 title-font text-lg font-medium flex px-5 mt-2 items-center justify-center flex-col'>
+                                            <p style={{color: '#4c1d95'}}>Option 1</p>
+                                            <p style={{color: '#701a75'}}>Option 2</p>
+                                            <p style={{color: '#831843'}}>Option 3</p>
+                                            <p style={{color: '#312e81'}}>Option 4</p>
+                                        </div>
+                                    </div>
                                 </button>
                             }
                         </>
