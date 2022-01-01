@@ -22,6 +22,11 @@ const Question = ({ props }) => {
     const [displayQuestion, setDisplayQuestion] = useState(true);
     const [displayPieChart, setDisplayPieChart] = useState(false);
 
+    const [option1OfResponse, setOption1OfResponse] = useState(0);
+    const [option2OfResponse, setOption2OfResponse] = useState(0);
+    const [option3OfResponse, setOption3OfResponse] = useState(0);
+    const [option4OfResponse, setOption4OfResponse] = useState(0);
+
     const {exam_id, question, option1, option2, option3, option4, answer, ques_id} = fullQuestion;
 
     useEffect(() => {
@@ -34,6 +39,21 @@ const Question = ({ props }) => {
 
         Axios.get(`${domain}exam/${exam_id}`)
             .then(res => setExam(res.data[0]));
+
+        Axios.get(`${domain}responses/${ques_id}`)
+            .then(res => {
+                let o1 = 0, o2 = 0, o3 = 0, o4 = 0;
+                res?.data?.map(rs => {
+                    if(rs.userAnswer == '1') o1++;
+                    else if(rs.userAnswer == '2') o2++;
+                    else if(rs.userAnswer == '3') o3++;
+                    else o4++;
+                });
+                setOption1OfResponse(o1);
+                setOption2OfResponse(o2);
+                setOption3OfResponse(o3);
+                setOption4OfResponse(o4);
+            }); 
     } ,[]);
 
 
@@ -127,11 +147,11 @@ const Question = ({ props }) => {
     }
 
     const data = [
-        { name: 'Group A', value: 1 },
-        { name: 'Group B', value: 2 },
-        { name: 'Group C', value: 3 },
-        { name: 'Group D', value: 4 },
-      ];
+        { name: 'Group A', value: option1OfResponse },
+        { name: 'Group B', value: option2OfResponse },
+        { name: 'Group C', value: option3OfResponse },
+        { name: 'Group D', value: option4OfResponse },
+    ];
 
     const COLORS = ['#4c1d95', '#701a75', '#831843', '#312e81'];
 
@@ -145,7 +165,7 @@ const Question = ({ props }) => {
 
         return (
             <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-                {`${cnt++}. ${(percent * 100).toFixed(0)}%`}
+                {`${(percent * 100).toFixed(0)}%`}
             </text>
         );
     };
@@ -345,10 +365,10 @@ const Question = ({ props }) => {
                                             </PieChart>
                                         </div>
                                         <div className='p-4 md:w-1/2 title-font text-lg font-medium flex px-5 mt-2 items-center justify-center flex-col'>
-                                            <p style={{color: '#4c1d95'}}>Option 1</p>
-                                            <p style={{color: '#701a75'}}>Option 2</p>
-                                            <p style={{color: '#831843'}}>Option 3</p>
-                                            <p style={{color: '#312e81'}}>Option 4</p>
+                                            <p style={{color: '#4c1d95'}}>Option 1 {option1OfResponse}</p>
+                                            <p style={{color: '#701a75'}}>Option 2 {option2OfResponse}</p>
+                                            <p style={{color: '#831843'}}>Option 3 {option3OfResponse}</p>
+                                            <p style={{color: '#312e81'}}>Option 4 {option4OfResponse}</p>
                                         </div>
                                     </div>
                                 </button>
