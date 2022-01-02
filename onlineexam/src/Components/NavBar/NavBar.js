@@ -17,7 +17,7 @@ const NavBar = () => {
             <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
               {
                 user.displayName ? <div>
-                  <span className='text-4xl p-4 mt-6 text-gray-900'><i className="fas fa-user-circle pt-4"></i></span>
+                  <Link to={`/user/${user.uid}`} className='text-4xl p-4 mt-6 text-gray-900'><i className="fas fa-user-circle pt-4"></i></Link>
                   <button onClick={logOut} className="border-2 border-gray-900 font-semibold leading-none text-gray-900 py-1 px-2 hover:border-gray-800 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:outline-none">Log Out
                   <i class="fas fa-sign-out-alt text-xl p-2 text-gray-900"></i>
                   </button>

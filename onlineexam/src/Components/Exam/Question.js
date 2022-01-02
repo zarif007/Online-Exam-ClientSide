@@ -153,7 +153,7 @@ const Question = ({ props }) => {
         { name: 'Group D', value: option4OfResponse },
     ];
 
-    const COLORS = ['#4c1d95', '#701a75', '#831843', '#312e81'];
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
     const RADIAN = Math.PI / 180;
     
@@ -365,10 +365,10 @@ const Question = ({ props }) => {
                                             </PieChart>
                                         </div>
                                         <div className='p-4 md:w-1/2 title-font text-lg font-medium flex px-5 mt-2 items-center justify-center flex-col'>
-                                            <p style={{color: '#4c1d95'}}>Option 1 {option1OfResponse}</p>
-                                            <p style={{color: '#701a75'}}>Option 2 {option2OfResponse}</p>
-                                            <p style={{color: '#831843'}}>Option 3 {option3OfResponse}</p>
-                                            <p style={{color: '#312e81'}}>Option 4 {option4OfResponse}</p>
+                                            <p style={{color: '#0088FE'}}>Option 1 {option1OfResponse}</p>
+                                            <p style={{color: '#00C49F'}}>Option 2 {option2OfResponse}</p>
+                                            <p style={{color: '#FFBB28'}}>Option 3 {option3OfResponse}</p>
+                                            <p style={{color: '#FF8042'}}>Option 4 {option4OfResponse}</p>
                                         </div>
                                     </div>
                                 </button>

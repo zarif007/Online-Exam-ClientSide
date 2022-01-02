@@ -18,6 +18,7 @@ import Register from './Components/Authentication/Register/Register';
 import PrivateRoute from './Components/Authentication/PrivateRoute/PrivateRoute';
 import Grades from './Components/Grades/Grades';
 import JoinExam from './Components/JoinExam/JoinExam';
+import UserProfile from './Components/UserProfile/UserProfile';
 
 
 function App() {
@@ -50,6 +51,9 @@ function App() {
             </PrivateRoute>
             <PrivateRoute exact path='/join'>
               <JoinExam/>
+            </PrivateRoute>
+            <PrivateRoute exact path='/user/:uid'>
+              <UserProfile/>
             </PrivateRoute>
           </Switch>
         </Router>
