@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useAuth from './../../CustomHooks/useAuth';
+import Axios from 'axios'
+import domain from "../../Domain";
+import dateFormatter from './../../dateFormatter';
 
 const UserProfile = () => {
 
     const { user } = useAuth();
+
+    const [createdExam, setCreatedExam] = useState([]);
+
+    useEffect(() => {
+        Axios.get(`${domain}exambyuser/${user.email}`)
+            .then(res => setCreatedExam(res.data));
+    }, [])
 
     const displayPicture = ['https://i.pinimg.com/564x/b7/b6/5d/b7b65d8c3ed8b5f45486e0ca3eb3bd1f.jpg', 'https://i.pinimg.com/564x/7a/77/e0/7a77e0ec6c81f5e588c6b46c864f95c2.jpg', 
                             'https://i.pinimg.com/564x/bd/5d/d7/bd5dd7757a31840758d6c2542017ef4e.jpg', 'https://i.pinimg.com/564x/b7/eb/61/b7eb6125f2ba4a4c1008276b00ff926d.jpg', 
@@ -15,19 +25,51 @@ const UserProfile = () => {
     return (
         <>
             <section class="text-gray-600 body-font">
-                <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
-                    <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
-                    <img class="object-cover object-center rounded w-full h-full" alt="hero" src={displayPicture[random]} />
+                <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
+                    <img class="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded" alt="hero" src={displayPicture[random]} />
+                    <div class="text-center lg:w-2/3 w-full">
+                        <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">{user.displayName}</h1>
+                        <h1 class="title-font sm:text-2xl text-xl mb-4 font-medium text-gray-900">{user.email}</h1>
+                        <div className='w-72 mx-auto'>
+                            <div class="flex justify-center mx-auto">
+                                <div className="p-4 sm:w-1/2 lg:w-1/2 w-1/2">
+                                <h2 className="title-font font-medium text-3xl text-gray-900">{createdExam.length}</h2>
+                                <p className="leading-relaxed">Created</p>
+                            </div>
+                                <div className="p-4 sm:w-1/2 lg:w-1/2 w-1/2">
+                                    <h2 className="title-font font-medium text-3xl text-gray-900">1.8K</h2>
+                                    <p className="leading-relaxed">Attended</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
-                    <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Before they sold out
-                        <br class="hidden lg:inline-block" />readymade gluten
-                    </h1>
-                    <p class="mb-8 leading-relaxed">Copper mug try-hard pitchfork pour-over freegan heirloom neutra air plant cold-pressed tacos poke beard tote bag. Heirloom echo park mlkshk tote bag selvage hot chicken authentic tumeric truffaut hexagon try-hard chambray.</p>
-                    <div class="flex justify-center">
-                        <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Button</button>
-                        <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">Button</button>
-                    </div>
+                </div>
+            </section>
+            <div class="flex flex-col text-center w-full mb-20">
+                <h2 class="text-4xl text-gray-900 tracking-widest font-medium title-font mb-1">Exams Created (Last 6)</h2>
+            </div>
+
+            <section class="text-gray-600 body-font">
+                <div class="container px-5 py-2 pb-12 mx-auto">
+                    <div class="flex flex-wrap -m-4">
+                        {
+                            createdExam.slice(0, 6).map(ce => {
+                                return (
+                                    <div class="xl:w-1/3 md:w-1/2 p-4">
+                                        <div class="border border-gray-200 p-6 rounded-lg">
+                                            <div class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-gray-100 text-gray-500 mb-4">
+                                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
+                                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                                                </svg>
+                                            </div>
+                                            <h2 class="text-lg text-gray-900 font-medium title-font mb-2">{ce.name}</h2>
+                                            <p class="leading-relaxed text-base">{ce.subject}</p>
+                                            <p class="leading-relaxed text-base">{dateFormatter(ce.assign_date)} - {dateFormatter(ce.last_date)}</p>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        } 
                     </div>
                 </div>
             </section>
