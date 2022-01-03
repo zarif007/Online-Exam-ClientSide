@@ -25,13 +25,15 @@ const Grades = () => {
     }, [])
 
     useEffect(() => {
+        const date = new Date();
         const data = {
             currect_answer: examInfo.currect_answer,
             total_ques: examInfo.total_ques,
+            date: date.toLocaleDateString(),
+            exam_name: examInfo.name,
         }
         
         if(data.currect_answer !== undefined){
-            console.log('data', data)
             Axios.post(`${domain}participate/${exam_id}/${user.uid}`, data)
                 .then(() => {});
         }

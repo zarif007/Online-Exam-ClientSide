@@ -3,17 +3,58 @@ import useAuth from './../../CustomHooks/useAuth';
 import Axios from 'axios'
 import domain from "../../Domain";
 import dateFormatter from './../../dateFormatter';
+import Chart from 'chart.js/auto'
+import { Line } from 'react-chartjs-2';
+
 
 const UserProfile = () => {
 
     const { user } = useAuth();
 
     const [createdExam, setCreatedExam] = useState([]);
+    const [attendedExam, setAttendedExam] = useState([]);
 
     useEffect(() => {
-        Axios.get(`${domain}exambyuser/${user.email}`)
+        Axios.get(`${domain}examcreatedbyuser/${user.email}`)
             .then(res => setCreatedExam(res.data));
-    }, [])
+
+        Axios.get(`${domain}participatedbyuser/${user.uid}`)
+            .then(res => setAttendedExam(res.data));
+    }, []);
+
+    const examName = [];
+    const marks = [];
+
+    attendedExam.map(ae => {
+        examName.push(ae.exam_name);
+        marks.push(parseFloat(ae.currect_answer / ae.total_ques).toFixed(2) * 100);
+    });
+
+    const data = {
+        labels: examName,
+        datasets: [
+            {
+                label: 'marks',
+                data: marks,
+                pointRadius: 1,
+                fill: false,
+                backgroundColor: 'black',
+                borderColor: 'white',
+            },
+        ],
+    };
+
+    const options = {
+        scales: {
+                yAxes: [
+                {
+                    ticks: {
+                    beginAtZero: true,
+                    },
+                },
+            ],
+        },
+    };
 
     const displayPicture = ['https://i.pinimg.com/564x/b7/b6/5d/b7b65d8c3ed8b5f45486e0ca3eb3bd1f.jpg', 'https://i.pinimg.com/564x/7a/77/e0/7a77e0ec6c81f5e588c6b46c864f95c2.jpg', 
                             'https://i.pinimg.com/564x/bd/5d/d7/bd5dd7757a31840758d6c2542017ef4e.jpg', 'https://i.pinimg.com/564x/b7/eb/61/b7eb6125f2ba4a4c1008276b00ff926d.jpg', 
@@ -37,7 +78,7 @@ const UserProfile = () => {
                                 <p className="leading-relaxed">Created</p>
                             </div>
                                 <div className="p-4 sm:w-1/2 lg:w-1/2 w-1/2">
-                                    <h2 className="title-font font-medium text-3xl text-gray-900">1.8K</h2>
+                                    <h2 className="title-font font-medium text-3xl text-gray-900">{attendedExam.length}</h2>
                                     <p className="leading-relaxed">Attended</p>
                                 </div>
                             </div>
@@ -45,6 +86,7 @@ const UserProfile = () => {
                     </div>
                 </div>
             </section>
+
             <div class="flex flex-col text-center w-full mb-20">
                 <h2 class="text-4xl text-gray-900 tracking-widest font-medium title-font mb-1">Exams Created (Last 6)</h2>
             </div>
@@ -70,6 +112,40 @@ const UserProfile = () => {
                                 )
                             })
                         } 
+                    </div>
+                </div>
+            </section>
+
+            <div class="flex flex-col text-center w-full mb-20 mt-12">
+                <h2 class="text-4xl text-gray-900 tracking-widest font-medium title-font mb-1">Exams Attended (Last 6)</h2>
+            </div>
+            
+            <section class="text-gray-600 body-font">
+                <div className='p-4 flex px-5 md items-center justify-center flex-col flex-wrap container'>
+                <Line data={data} options={options} />
+                </div>
+                
+                <div class="container px-5 py-24 mx-auto">                 
+                    <div class="flex flex-wrap -mx-4 -my-8">
+                        {
+                            attendedExam.slice(0, 6).map(ae => {
+                                const date = dateFormatter(ae.date);
+                                return (
+                                    <div class="py-8 px-4 lg:w-1/3">
+                                        <div class="h-full flex items-start">
+                                            <div class="w-12 flex-shrink-0 flex flex-col text-center leading-none">
+                                                <span class="text-gray-500 pb-2 mb-2 border-b-2 border-gray-200">{date.split(' ')[1].slice(0, 3)}</span>
+                                                <span class="font-medium text-lg text-gray-800 title-font leading-none">{date.split(' ')[0]}</span>
+                                            </div>
+                                            <div class="flex-grow pl-6">
+                                                <h1 class="title-font text-xl font-medium text-gray-900 mb-3">{ae.exam_name}</h1>
+                                                <p class="leading-relaxed text-gray-900 mb-5">Marks: {ae.currect_answer}/{ae.total_ques}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                 </div>
             </section>
