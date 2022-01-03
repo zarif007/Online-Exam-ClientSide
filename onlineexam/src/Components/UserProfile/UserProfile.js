@@ -4,7 +4,7 @@ import Axios from 'axios'
 import domain from "../../Domain";
 import dateFormatter from './../../dateFormatter';
 import Chart from 'chart.js/auto'
-import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
 
 const UserProfile = () => {
@@ -25,7 +25,7 @@ const UserProfile = () => {
     const examName = [];
     const marks = [];
 
-    attendedExam.map(ae => {
+    attendedExam.slice(0, 10).map(ae => {
         examName.push(ae.exam_name);
         marks.push(parseFloat(ae.currect_answer / ae.total_ques).toFixed(2) * 100);
     });
@@ -34,7 +34,7 @@ const UserProfile = () => {
         labels: examName,
         datasets: [
             {
-                label: 'marks',
+                label: 'marks(%)',
                 data: marks,
                 pointRadius: 1,
                 fill: false,
@@ -88,7 +88,7 @@ const UserProfile = () => {
             </section>
 
             <div class="flex flex-col text-center w-full mb-20">
-                <h2 class="text-4xl text-gray-900 tracking-widest font-medium title-font mb-1">Exams Created (Last 6)</h2>
+                <h2 class="text-4xl text-gray-900 tracking-widest font-medium title-font mb-1">Exams Created (Last few)</h2>
             </div>
 
             <section class="text-gray-600 body-font">
@@ -117,18 +117,24 @@ const UserProfile = () => {
             </section>
 
             <div class="flex flex-col text-center w-full mb-20 mt-12">
-                <h2 class="text-4xl text-gray-900 tracking-widest font-medium title-font mb-1">Exams Attended (Last 6)</h2>
+                <h2 class="text-4xl text-gray-900 tracking-widest font-medium title-font mb-1">Exams Attended (Last few)</h2>
+            </div>
+
+            <div className='p-4 flex md items-center justify-center flex-col flex-wrap container mx-auto'>
+                <Bar 
+                    data={data} 
+                    options={options}
+                    height={10}
+                    width={50} />
             </div>
             
             <section class="text-gray-600 body-font">
-                <div className='p-4 flex px-5 md items-center justify-center flex-col flex-wrap container'>
-                <Line data={data} options={options} />
-                </div>
+                
                 
                 <div class="container px-5 py-24 mx-auto">                 
                     <div class="flex flex-wrap -mx-4 -my-8">
                         {
-                            attendedExam.slice(0, 6).map(ae => {
+                            attendedExam.slice(0, 9).map(ae => {
                                 const date = dateFormatter(ae.date);
                                 return (
                                     <div class="py-8 px-4 lg:w-1/3">
