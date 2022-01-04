@@ -19,7 +19,7 @@ const ExamInfo = ({ exam }) => {
                             </svg>
                         </div>
                         <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Name</h2>
-                        <p class="leading-relaxed text-base">{exam.name}</p>
+                        <p class="leading-relaxed text-base">{exam?.name}</p>
                         </div>
                     </div>
                     <div class="xl:w-2/6 md:w-1/2 w-full p-4">
@@ -32,7 +32,7 @@ const ExamInfo = ({ exam }) => {
                             </svg>
                         </div>
                         <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Subject</h2>
-                        <p class="leading-relaxed text-base">{exam.subject}</p>
+                        <p class="leading-relaxed text-base">{exam?.subject}</p>
                         </div>
                     </div>
                     <div class="xl:w-2/6 md:w-1/2 w-full p-4">
@@ -44,7 +44,7 @@ const ExamInfo = ({ exam }) => {
                             </svg>
                         </div>
                         <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Author</h2>
-                        <p class="leading-relaxed text-base">{exam.author}</p>
+                        <p class="leading-relaxed text-base">{exam?.author}</p>
                         </div>
                     </div>
                     <div class="xl:w-2/6 md:w-1/2 w-full p-4">
@@ -55,7 +55,7 @@ const ExamInfo = ({ exam }) => {
                             </svg>
                         </div>
                         <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Assign Date</h2>
-                        <p class="leading-relaxed text-base">{dateFormatter(exam.assign_date)}</p>
+                        <p class="leading-relaxed text-base">{dateFormatter(exam?.assign_date)}</p>
                         </div>
                     </div>
                     <div class="xl:w-2/6 md:w-1/2 w-full p-4">
@@ -66,7 +66,7 @@ const ExamInfo = ({ exam }) => {
                             </svg>
                         </div>
                         <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Laste Date</h2>
-                        <p class="leading-relaxed text-base">{dateFormatter(exam.last_date)}</p>
+                        <p class="leading-relaxed text-base">{dateFormatter(exam?.last_date)}</p>
                         </div>
                     </div>
                     <div class="xl:w-2/6 md:w-1/2 w-full p-4">
@@ -79,7 +79,7 @@ const ExamInfo = ({ exam }) => {
                             </svg>
                         </div>
                         <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Exam Code</h2>
-                        <p class="leading-relaxed text-base">{exam.exam_id}</p>
+                        <p class="leading-relaxed text-base">{exam?.exam_id}</p>
                         </div>
                     </div>
                 </div>

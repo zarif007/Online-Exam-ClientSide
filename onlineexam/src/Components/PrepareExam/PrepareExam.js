@@ -29,7 +29,7 @@ const PrepareExam = () => {
         
         Axios.get(`${domain}exam/${exam_id}`)
             .then(res => setExam(res.data[0]));
-    }, []);
+    }, [questions]);
 
     
     let count = 1;

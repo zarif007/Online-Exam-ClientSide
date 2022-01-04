@@ -38,7 +38,7 @@ const UserProfile = () => {
                 data: marks,
                 pointRadius: 1,
                 fill: false,
-                backgroundColor: 'black',
+                backgroundColor: '#1e293b',
                 borderColor: 'white',
             },
         ],
