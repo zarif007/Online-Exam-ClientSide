@@ -26,7 +26,7 @@ const UserProfile = () => {
     const marks = [];
 
     attendedExam.slice(0, 10).map(ae => {
-        examName.push(ae.exam_name);
+        examName.push(ae.exam_name.substring(0, 10));
         marks.push(parseFloat(ae.currect_answer / ae.total_ques).toFixed(2) * 100);
     });
 
@@ -124,8 +124,8 @@ const UserProfile = () => {
                 <Bar 
                     data={data} 
                     options={options}
-                    height={10}
-                    width={50} />
+                    height={20}
+                    width={40} />
             </div>
             
             <section class="text-gray-600 body-font">
